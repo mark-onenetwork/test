@@ -2,7 +2,7 @@ name: Acceptance tests
 run-name: Acceptance tests
 on: [workflow_dispatch, push]
 env:
-  IGNORE_VERSION_CHECK: ${{ github.event_name }}
+  IGNORE_VERSION_CHECK: ${{ github.event_name == 'workflow_dispatch' }}
 jobs:
   test:
     name: Test
