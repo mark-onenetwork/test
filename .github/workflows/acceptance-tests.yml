@@ -1,0 +1,10 @@
+name: Acceptance tests
+run-name: Acceptance tests
+on: [workflow_dispatch]
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: env
