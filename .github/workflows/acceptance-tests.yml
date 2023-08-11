@@ -1,10 +1,14 @@
 name: Acceptance tests
 run-name: Acceptance tests
-on: [workflow_dispatch]
+on: [workflow_dispatch, push]
+env:
+  IGNORE_VERSION_CHECK: ${{ github.event_name }}
 jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
     steps:
       - name: test
-        run: echo '!!!!!'
+        run: |
+          echo '!!!!!'
+          echo "${IGNORE_VERSION_CHECK}"
