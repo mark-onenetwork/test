@@ -1,0 +1,20 @@
+name: Master
+run-name: Master
+on: [push]
+concurrency: deployment-staging
+# permissions:
+#   id-token: write
+#   contents: read
+permissions: read-all
+jobs:
+  default:
+    name: Default
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: test
+        run: |
+          echo ${{ github.actor }}
+          gh run list -L 5
+          # gh run list -w default.yml -b master -L 1 --json status
+      - run: echo 'deployed'
