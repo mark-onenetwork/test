@@ -32,4 +32,7 @@ jobs:
           gh run list -w master.yml -b master -L 1 --json conclusion | jq -e -r '.[0].conclusion == "success"'
       - run: echo 'deployed'
   test:
-    - run: echo 'end'
+    name: Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'end'
