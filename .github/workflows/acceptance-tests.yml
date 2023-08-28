@@ -20,5 +20,5 @@ jobs:
     uses: ./.github/workflows/shared-deployment.yml
     with:
       environment: staging
-      ignore_status_check: inputs.force_deployment
+      ignore_status_check: ${{ inputs.force_deployment }}
     secrets: inherit
