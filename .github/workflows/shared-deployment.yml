@@ -18,7 +18,7 @@ jobs:
       - name: Dump inputs
         env:
           GITHUB_CONTEXT: ${{ toJson(inputs) }}
-      - run: echo "${{ inputs.ignore_status_check }}"
+        run: echo "${{ inputs.ignore_status_check }}"
 
   master-workflow-status:
     name: Master workflow status
