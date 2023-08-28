@@ -1,38 +1,24 @@
-name: Deployment - Staging
-run-name: Deployment - Staging
-on: 
-  push:
+name: Acceptance tests
+run-name: Acceptance tests
+on:
   workflow_dispatch:
     inputs:
       force_deployment:
         description: "Force deployment regardless of failure on master workflow"
         type: boolean
         default: false
+
 concurrency: deployment-staging
-# permissions:
-#   id-token: write
-#   contents: read
-permissions: read-all
+permissions:
+  id-token: write
+  contents: read
+  actions: read
+
 jobs:
   deployment:
-    name: Deployment
-    if: github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Hello Step
-        run: echo "Hello ${{ github.event.inputs.force_deployment }}"
-      - name: test
-        if: github.event.inputs.force_deployment != 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh run list -w master.yml -b master -L 10
-          gh run list -w master.yml -b master -L 1 --json status,conclusion,displayTitle
-          gh run list -w master.yml -b master -L 1 --json conclusion | jq -e -r '.[0].conclusion == "success"'
-      - run: echo 'deployed'
-  test:
-    name: Deployment
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo 'end'
+    name: Deploy on staging
+    uses: ./.github/workflows/shared-deployment.yml
+    with:
+      environment: staging
+      ignore_status_check: inputs.force_deployment
+    secrets: inherit
