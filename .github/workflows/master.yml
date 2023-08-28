@@ -1,7 +1,7 @@
 name: Master
 run-name: Master
 on: [push]
-concurrency: deployment-staging
+concurrency: master
 # permissions:
 #   id-token: write
 #   contents: read
