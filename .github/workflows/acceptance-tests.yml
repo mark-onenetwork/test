@@ -18,5 +18,5 @@ jobs:
         run: |
           gh run list -w master.yml -b master -L 1
           gh run list -w master.yml -b master -L 1 --json status
-          gh run list -w master.yml -b master -L 1 --json status | jq -r '.[0].status'
+          gh run list -w master.yml -b master -L 1 --json status | jq -e -r '.[0].status == "completed"'
       - run: echo 'deployed'
