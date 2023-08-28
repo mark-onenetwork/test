@@ -12,8 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: test
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
         run: |
           echo ${{ github.actor }}
           gh run list -L 5
