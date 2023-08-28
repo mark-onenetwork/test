@@ -1,10 +1,11 @@
 name: Deployment - Staging
 run-name: Deployment - Staging
-on: [push]
+on: [workflow_dispatch]
 concurrency: deployment-staging
-permissions:
-  id-token: write
-  contents: read
+# permissions:
+#   id-token: write
+#   contents: read
+permissions: read-all
 jobs:
   deployment:
     name: Deployment
@@ -17,5 +18,6 @@ jobs:
         run: |
           echo ${{ github.actor }}
           gh run list -L 5
-          # gh run list -w default.yml -b master -L 1 --json status
+          gh run list -w default.yml -b master -L 1
+          gh run list -w default.yml -b master -L 1 --json status
       - run: echo 'deployed'
