@@ -3,10 +3,10 @@ run-name: Deployment - Staging
 on: 
   workflow_dispatch:
     inputs:
-    name:
-      description: "Force deployment regardless of failure on master workflow"
-      type: boolean
-      default: false
+      name:
+        description: "Force deployment regardless of failure on master workflow"
+        type: boolean
+        default: false
 concurrency: deployment-staging
 # permissions:
 #   id-token: write
