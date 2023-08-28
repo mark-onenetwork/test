@@ -3,7 +3,7 @@ run-name: Deployment - Staging
 on: 
   workflow_dispatch:
     inputs:
-      name:
+      force_deployment:
         description: "Force deployment regardless of failure on master workflow"
         type: boolean
         default: false
@@ -19,12 +19,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Hello Step
-        run: echo "Hello ${{ github.event.inputs.name }}"
+        run: echo "Hello ${{ github.event.inputs.force_deployment }}"
       - name: test
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh run list -w master.yml -b master -L 10
           gh run list -w master.yml -b master -L 1 --json status,conclusion,displayTitle
-          gh run list -w master.yml -b master -L 1 --json status | jq -e -r '.[0].status == "completed"'
+          gh run list -w master.yml -b master -L 1 --json status | jq -e -r '.[0].conslusion == "success"'
       - run: echo 'deployed'
