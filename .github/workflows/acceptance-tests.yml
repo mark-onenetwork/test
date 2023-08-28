@@ -1,10 +1,21 @@
-name: Acceptance tests
-run-name: Acceptance tests
-on: [workflow_dispatch]
+name: Deployment - Staging
+run-name: Deployment - Staging
+on: [push]
+concurrency: deployment-staging
+permissions:
+  id-token: write
+  contents: read
 jobs:
-  test:
-    name: Test
+  deployment:
+    name: Deployment
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: test
-        run: env
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          echo ${{ github.actor }}
+          gh run list -L 5
+          # gh run list -w default.yml -b master -L 1 --json status
+      - run: echo 'deployed'
