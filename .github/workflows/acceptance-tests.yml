@@ -6,7 +6,7 @@ on:
       force_deployment:
         description: "Force deployment regardless of failure on master workflow"
         type: boolean
-        default: false
+        default: true
 concurrency: deployment-staging
 # permissions:
 #   id-token: write

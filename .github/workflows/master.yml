@@ -16,6 +16,6 @@ jobs:
         run: |
           # sleep 60
           echo ${{ github.actor }}
-          gh run list -L 5
+          # gh run list -L 5
           # gh run list -w default.yml -b master -L 1 --json status
       - run: echo 'deployed'
