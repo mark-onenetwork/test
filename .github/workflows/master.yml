@@ -14,7 +14,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: test
         run: |
+          sleep 60
           echo ${{ github.actor }}
-          # gh run list -L 5
+          gh run list -L 5
           # gh run list -w default.yml -b master -L 1 --json status
       - run: echo 'deployed'
