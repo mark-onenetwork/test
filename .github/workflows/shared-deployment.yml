@@ -1,0 +1,36 @@
+name: Reusable workflow for deployment
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      ignore_status_check:
+        required: true
+        type: boolean
+        
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump inputs
+        env:
+          GITHUB_CONTEXT: ${{ toJson(inputs) }}
+      - run: echo "${{ inputs.ignore_status_check }}"
+
+  master-workflow-status:
+    name: Master workflow status
+    runs-on: ubuntu-latest
+    if: inputs.ignore_status_check != true
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check master workflow status
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run list -w master.yml -b master -L 10
+          gh run list -w master.yml -b master -L 1 --json conclusion | jq -e -r '.[0].conclusion == "success"'
+
+
