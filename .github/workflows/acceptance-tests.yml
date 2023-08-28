@@ -16,7 +16,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh run list -L 5
           gh run list -w master.yml -b master -L 1
           gh run list -w master.yml -b master -L 1 --json status
+          gh run list -w master.yml -b master -L 1 --json status | jq -r '.[0].status'
       - run: echo 'deployed'
