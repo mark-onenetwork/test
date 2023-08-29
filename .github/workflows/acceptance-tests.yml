@@ -15,10 +15,20 @@ permissions:
   actions: read
 
 jobs:
-  deployment:
-    name: Deploy on staging
-    uses: ./.github/workflows/shared-deployment.yml
-    with:
-      environment: staging
-      ignore_status_check: ${{ inputs.force_deployment }}
-    secrets: inherit
+  # deployment:
+  #   name: Deploy on staging
+  #   uses: ./.github/workflows/shared-deployment.yml
+  #   with:
+  #     environment: staging
+  #     ignore_status_check: ${{ inputs.force_deployment }}
+  #   secrets: inherit
+
+  test:
+    name: Master workflow status
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: test push
+        run: |
+          echo 'asdf' > CHANGELOG.md
+          git add CHANGELOG.md && git commit -m "[skip ci] Release ${version_number}" && git push git@github.com:mark-onenetwork/test.git master
