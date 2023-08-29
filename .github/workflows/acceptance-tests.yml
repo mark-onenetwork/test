@@ -23,7 +23,6 @@ jobs:
 
   deployment:
     name: Deploy on staging
-    if: false
     uses: ./.github/workflows/shared-deployment.yml
     with:
       environment: staging
