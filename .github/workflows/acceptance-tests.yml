@@ -31,4 +31,6 @@ jobs:
       - name: test push
         run: |
           echo 'asdf' > CHANGELOG.md
+          git config --global user.email "mark@growthbox.com.au"
+          git config --global user.name "Mark"
           git add CHANGELOG.md && git commit -m "[skip ci] Release ${version_number}" && git push git@github.com:mark-onenetwork/test.git master
