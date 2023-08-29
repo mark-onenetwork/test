@@ -33,4 +33,4 @@ jobs:
           echo 'asdf' > CHANGELOG.md
           git config --global user.email "mark@growthbox.com.au"
           git config --global user.name "Mark"
-          git add CHANGELOG.md && git commit -m "11[skip ci] Release ${version_number}" && git push https://github.com/mark-onenetwork/test/ master
+          git add CHANGELOG.md && git commit -m "11[skip ci] Release ${version_number}" && git push https://github.com/mark-onenetwork/test.git master
