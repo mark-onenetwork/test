@@ -15,6 +15,12 @@ permissions:
   actions: read
 
 jobs:
+  tttt:
+    name: ttt
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "asdf"
+
   deployment:
     name: Deploy on staging
     if: false
