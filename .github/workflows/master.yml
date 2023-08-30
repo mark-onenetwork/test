@@ -8,4 +8,5 @@ jobs:
     name: Default
     runs-on: ubuntu-latest
     steps:
-      - run: echo 'deployed'
+      - uses: actions/setup-node@v3
+      - node --version
