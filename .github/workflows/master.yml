@@ -12,6 +12,5 @@ jobs:
       - run: ls -alh
       - uses: actions/setup-node@v3
         with:
-          node-version-file: ../.tool-versions
+          node-version-file: .tool-versions
       - run: node --version
-      - run: ls -alh
