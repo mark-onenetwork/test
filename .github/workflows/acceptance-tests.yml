@@ -19,25 +19,26 @@ jobs:
     name: ttt
     runs-on: ubuntu-latest
     steps:
-      - run: echo "asdf"
+      - run: echo "${{ github.ref_name }}"
+      - run: echo "${{ github.sha }}"
 
-  deployment:
-    name: Deploy on staging
-    uses: ./.github/workflows/shared-deployment.yml
-    with:
-      environment: staging
-      ignore_status_check: ${{ inputs.force_deployment }}
-    secrets: inherit
+  # deployment:
+  #   name: Deploy on staging
+  #   uses: ./.github/workflows/shared-deployment.yml
+  #   with:
+  #     environment: staging
+  #     ignore_status_check: ${{ inputs.force_deployment }}
+  #   secrets: inherit
 
-  test:
-    name: Master workflow status
-    runs-on: ubuntu-latest
-    needs: [deployment]
-    steps:
-      - uses: actions/checkout@v3
-      - name: test push
-        run: |
-          echo 'asdf' > CHANGELOG.md
-          git config --global user.email "mark@growthbox.com.au"
-          git config --global user.name "Mark"
-          # git add CHANGELOG.md && git commit -m "11[skip ci] Release ${version_number}" && git push https://github.com/mark-onenetwork/test.git master
+  # test:
+  #   name: Master workflow status
+  #   runs-on: ubuntu-latest
+  #   needs: [deployment]
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: test push
+  #       run: |
+  #         echo 'asdf' > CHANGELOG.md
+  #         git config --global user.email "mark@growthbox.com.au"
+  #         git config --global user.name "Mark"
+  #         # git add CHANGELOG.md && git commit -m "11[skip ci] Release ${version_number}" && git push https://github.com/mark-onenetwork/test.git master
