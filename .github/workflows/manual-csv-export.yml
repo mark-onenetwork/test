@@ -1,27 +1,38 @@
-name: Acceptance tests
-run-name: Acceptance tests
+name: Manual CSV Export
+run-name: Manual CSV Export
 on:
   workflow_dispatch:
-    inputs:
-      force_deployment:
-        description: "Force deployment regardless of failure on master workflow"
-        type: boolean
-        default: false
-
-concurrency: deployment-staging
-permissions:
-  id-token: write
-  contents: write
-  actions: read
+  inputs:
+    environment:
+      description: 'Select an environment'
+      required: true
+      default: 'next'
+      options:
+        - next
+        - production
+    brand:
+      description: 'Select a brand'
+      required: true
+      default: 'next'
+      options:
+        - adss
+        - mp
+        - sealink
+        - cccsyd
+        - jackson
 
 jobs:
-  tttt:
-    name: ttt
+  build:
     runs-on: ubuntu-latest
-    steps:
-      - run: echo "${{ github.ref_name }}"
-      - run: echo "${{ github.sha }}"
 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Print selected options
+        run: |
+          echo "Selected environment: ${{ github.event.inputs.environment }}"
+          echo "User message: ${{ github.event.inputs.brand }}"
   # deployment:
   #   name: Deploy on staging
   #   uses: ./.github/workflows/shared-deployment.yml
