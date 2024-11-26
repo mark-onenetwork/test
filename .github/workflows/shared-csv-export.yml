@@ -1,4 +1,4 @@
-env.LOCAL_FILES_DIRname: Reusable workflow for CSV export
+name: Reusable workflow for CSV export
 
 on:
   workflow_call:
