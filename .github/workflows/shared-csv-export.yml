@@ -53,15 +53,15 @@ jobs:
             # echo "PASS=${{ secrets.CRM_SFTP_TESTING_PASSWORD }}" >> $GITHUB_ENV
             # echo "REMOTE_DIR=${{ env.NEXT_REMOTE_FILES_DIR }}" >> $GITHUB_ENV
             if [ "${{ inputs.brand }}" == "adss" ]; then
-              echo "URL=${{ vars.NEXT_ADSS_PRODUCT_URL }}" >> $GITHUB_ENV
+              echo "URL=${{ env.NEXT_ADSS_PRODUCT_URL }}" >> $GITHUB_ENV
             elif [ "${{ inputs.brand }}" == "mp" ]; then
-              echo "URL=${{ vars.NEXT_MP_PRODUCT_URL }}" >> $GITHUB_ENV
+              echo "URL=${{ env.NEXT_MP_PRODUCT_URL }}" >> $GITHUB_ENV
             elif [ "${{ inputs.brand }}" == "sealink" ]; then
-              echo "URL=${{ vars.NEXT_SEALINK_PRODUCT_URL }}" >> $GITHUB_ENV
+              echo "URL=${{ env.NEXT_SEALINK_PRODUCT_URL }}" >> $GITHUB_ENV
             elif [ "${{ inputs.brand }}" == "cccsyd" ]; then
-              echo "URL=${{ vars.NEXT_CCCSYD_PRODUCT_URL }}" >> $GITHUB_ENV
+              echo "URL=${{ env.NEXT_CCCSYD_PRODUCT_URL }}" >> $GITHUB_ENV
             elif [ "${{ inputs.brand }}" == "jackson" ]; then
-              echo "URL=${{ vars.NEXT_JACKSON_PRODUCT_URL }}" >> $GITHUB_ENV
+              echo "URL=${{ env.NEXT_JACKSON_PRODUCT_URL }}" >> $GITHUB_ENV
             fi
           else
             # echo "HOST=${{ vars.CRM_SFTP_PRODUCTION_HOST }}" >> $GITHUB_ENV
@@ -69,22 +69,22 @@ jobs:
             # echo "PASS=${{ secrets.CRM_SFTP_PRODUCTION_PASSWORD }}" >> $GITHUB_ENV
             # echo "REMOTE_DIR=${{ env.PROD_REMOTE_FILES_DIR }}" >> $GITHUB_ENV
             if [ "${{ inputs.brand }}" == "adss" ]; then
-              echo "URL=${{ vars.PROD_ADSS_PRODUCT_URL }}" >> $GITHUB_ENV
+              echo "URL=${{ env.PROD_ADSS_PRODUCT_URL }}" >> $GITHUB_ENV
             elif [ "${{ inputs.brand }}" == "mp" ]; then
-              echo "URL=${{ vars.PROD_MP_PRODUCT_URL }}" >> $GITHUB_ENV
+              echo "URL=${{ env.PROD_MP_PRODUCT_URL }}" >> $GITHUB_ENV
             elif [ "${{ inputs.brand }}" == "sealink" ]; then
-              echo "URL=${{ vars.PROD_SEALINK_PRODUCT_URL }}" >> $GITHUB_ENV
+              echo "URL=${{ env.PROD_SEALINK_PRODUCT_URL }}" >> $GITHUB_ENV
             elif [ "${{ inputs.brand }}" == "cccsyd" ]; then
-              echo "URL=${{ vars.PROD_CCCSYD_PRODUCT_URL }}" >> $GITHUB_ENV
+              echo "URL=${{ env.PROD_CCCSYD_PRODUCT_URL }}" >> $GITHUB_ENV
             elif [ "${{ inputs.brand }}" == "jackson" ]; then
-              echo "URL=${{ vars.PROD_JACKSON_PRODUCT_URL }}" >> $GITHUB_ENV
+              echo "URL=${{ env.PROD_JACKSON_PRODUCT_URL }}" >> $GITHUB_ENV
             fi
           fi
 
       - name: Download CSV files
         run: |
           echo "$URL"
-          echo "env"
+          env
           mkdir -p $LOCAL_FILES_DIR
           curl -o "$LOCAL_FILES_DIR/product-$(date +'%Y-%m-%d_%H-%M-%S').csv $URL"
       - name: Upload CSV files to next SFTP
