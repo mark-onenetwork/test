@@ -1,4 +1,4 @@
-name: Reusable workflow for CSV export
+env.LOCAL_FILES_DIRname: Reusable workflow for CSV export
 
 on:
   workflow_call:
@@ -46,29 +46,47 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set output based on input
-        id: set_output
         run: |
           if [ "${{ inputs.environment }}" == "next" ]; then
-            echo "HOST=${{ vars.CRM_SFTP_TESTING_HOST }}" >> $GITHUB_ENV
-            echo "USER=${{ secrets.CRM_SFTP_TESTING_USERNAME }}" >> $GITHUB_ENV
-            echo "PASS=${{ secrets.CRM_SFTP_TESTING_PASSWORD }}" >> $GITHUB_ENV
-            echo "LOCAL_DIR=${{ env.LOCAL_FILES_DIR }}" >> $GITHUB_ENV
-            echo "REMOTE_DIR=${{ env.NEXT_REMOTE_FILES_DIR }}" >> $GITHUB_ENV
+            # echo "HOST=${{ vars.CRM_SFTP_TESTING_HOST }}" >> $GITHUB_ENV
+            # echo "USER=${{ secrets.CRM_SFTP_TESTING_USERNAME }}" >> $GITHUB_ENV
+            # echo "PASS=${{ secrets.CRM_SFTP_TESTING_PASSWORD }}" >> $GITHUB_ENV
+            # echo "REMOTE_DIR=${{ env.NEXT_REMOTE_FILES_DIR }}" >> $GITHUB_ENV
+            if [ "${{ inputs.brand }}" == "adss" ]; then
+              echo "URL=${{ vars.NEXT_ADSS_PRODUCT_URL }}" >> $GITHUB_ENV
+            elif [ "${{ inputs.brand }}" == "mp" ]; then
+              echo "URL=${{ vars.NEXT_MP_PRODUCT_URL }}" >> $GITHUB_ENV
+            elif [ "${{ inputs.brand }}" == "sealink" ]; then
+              echo "URL=${{ vars.NEXT_SEALINK_PRODUCT_URL }}" >> $GITHUB_ENV
+            elif [ "${{ inputs.brand }}" == "cccsyd" ]; then
+              echo "URL=${{ vars.NEXT_CCCSYD_PRODUCT_URL }}" >> $GITHUB_ENV
+            elif [ "${{ inputs.brand }}" == "jackson" ]; then
+              echo "URL=${{ vars.NEXT_JACKSON_PRODUCT_URL }}" >> $GITHUB_ENV
+            fi
           else
-            echo "HOST=${{ vars.CRM_SFTP_PRODUCTION_HOST }}" >> $GITHUB_ENV
-            echo "USER=${{ secrets.CRM_SFTP_PRODUCTION_USERNAME }}" >> $GITHUB_ENV
-            echo "PASS=${{ secrets.CRM_SFTP_PRODUCTION_PASSWORD }}" >> $GITHUB_ENV
-            echo "LOCAL_DIR=${{ env.LOCAL_FILES_DIR }}" >> $GITHUB_ENV
-            echo "REMOTE_DIR=${{ env.PROD_REMOTE_FILES_DIR }}" >> $GITHUB_ENV
+            # echo "HOST=${{ vars.CRM_SFTP_PRODUCTION_HOST }}" >> $GITHUB_ENV
+            # echo "USER=${{ secrets.CRM_SFTP_PRODUCTION_USERNAME }}" >> $GITHUB_ENV
+            # echo "PASS=${{ secrets.CRM_SFTP_PRODUCTION_PASSWORD }}" >> $GITHUB_ENV
+            # echo "REMOTE_DIR=${{ env.PROD_REMOTE_FILES_DIR }}" >> $GITHUB_ENV
+            if [ "${{ inputs.brand }}" == "adss" ]; then
+              echo "URL=${{ vars.PROD_ADSS_PRODUCT_URL }}" >> $GITHUB_ENV
+            elif [ "${{ inputs.brand }}" == "mp" ]; then
+              echo "URL=${{ vars.PROD_MP_PRODUCT_URL }}" >> $GITHUB_ENV
+            elif [ "${{ inputs.brand }}" == "sealink" ]; then
+              echo "URL=${{ vars.PROD_SEALINK_PRODUCT_URL }}" >> $GITHUB_ENV
+            elif [ "${{ inputs.brand }}" == "cccsyd" ]; then
+              echo "URL=${{ vars.PROD_CCCSYD_PRODUCT_URL }}" >> $GITHUB_ENV
+            elif [ "${{ inputs.brand }}" == "jackson" ]; then
+              echo "URL=${{ vars.PROD_JACKSON_PRODUCT_URL }}" >> $GITHUB_ENV
+            fi
           fi
 
-      # - name: Print value of A
-      #   run: echo "A is set to $A"
-      # - name: Download CSV files
-      #   run: |
-      #     mkdir -p $LOCAL_FILES_DIR
-      #     curl -o "$LOCAL_FILES_DIR/product-$(date +'%Y-%m-%d_%H-%M-%S').csv" $NEXT_ADSS_PRODUCT_URL
-      - name: Upload CSV files to SFTP
+      - name: Download CSV files
+        run: |
+          mkdir -p $LOCAL_FILES_DIR
+          curl -o "$LOCAL_FILES_DIR/product-$(date +'%Y-%m-%d_%H-%M-%S').csv $URL"
+      - name: Upload CSV files to next SFTP
+        if: inputs.environment == 'next'
         # uses: wangyucode/sftp-upload-action@v2.0.2
         # with:
         #   host: ${{ vars.CRM_SFTP_TESTING_HOST }}
@@ -77,11 +95,26 @@ jobs:
         #   localDir: '${{ env.LOCAL_FILES_DIR }}/'
         #   remoteDir: '${{ env.NEXT_REMOTE_FILES_DIR }}'
         run: |
-          echo "SFTP Host: $HOST"
-          echo "SFTP User: $USER"
-          echo "SFTP Pass: $PASS"
-          echo "Local dir: $LOCAL_DIR"
-          echo "Remote dir: $REMOTE_DIR"
+          echo "SFTP Host: ${{ vars.CRM_SFTP_TESTING_HOST }}"
+          echo "SFTP User: ${{ secrets.CRM_SFTP_TESTING_USERNAME }}"
+          echo "SFTP Pass: ${{ secrets.CRM_SFTP_TESTING_PASSWORD }}"
+          echo "Local dir: ${{ env.LOCAL_FILES_DIR  }}/"
+          echo "Remote dir: ${{ env.NEXT_REMOTE_FILES_DIR }}"
+      - name: Upload CSV files to production SFTP
+        if: inputs.environment == 'next'
+        # uses: wangyucode/sftp-upload-action@v2.0.2
+        # with:
+        #   host: ${{ vars.CRM_SFTP_TESTING_HOST }}
+        #   username: ${{ secrets.CRM_SFTP_TESTING_USERNAME }}
+        #   password: ${{ secrets.CRM_SFTP_TESTING_PASSWORD }}
+        #   localDir: '${{ env.LOCAL_FILES_DIR }}/'
+        #   remoteDir: '${{ env.NEXT_REMOTE_FILES_DIR }}'
+        run: |
+          echo "SFTP Host: ${{ vars.CRM_SFTP_TESTING_HOST }}"
+          echo "SFTP User: ${{ secrets.CRM_SFTP_TESTING_USERNAME }}"
+          echo "SFTP Pass: ${{ secrets.CRM_SFTP_TESTING_PASSWORD }}"
+          echo "Local dir: ${{ env.LOCAL_FILES_DIR  }}/"
+          echo "Remote dir: ${{ env.NEXT_REMOTE_FILES_DIR }}"
 
 
 
