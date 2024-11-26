@@ -40,46 +40,46 @@ jobs:
         run: echo "${{ inputs.environment }}"
         run: echo "${{ inputs.brand }}"
 
-    name: Export CSV
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set output based on input
-        id: set_output
-        run: |
-          if [ "${{ inputs.environment }}" == "next" ]; then
-            echo "HOST=${{ vars.CRM_SFTP_TESTING_HOST }}" >> $GITHUB_ENV
-            echo "USER=${{ secrets.CRM_SFTP_TESTING_USERNAME }}" >> $GITHUB_ENV
-            echo "PASS=${{ secrets.CRM_SFTP_TESTING_PASSWORD }}" >> $GITHUB_ENV
-            echo "LOCAL_DIR=${{ env.LOCAL_FILES_DIR }}" >> $GITHUB_ENV
-            echo "REMOTE_DIR=${{ env.NEXT_REMOTE_FILES_DIR }}" >> $GITHUB_ENV
-          else
-            echo "HOST=${{ vars.CRM_SFTP_PRODUCTION_HOST }}" >> $GITHUB_ENV
-            echo "USER=${{ secrets.CRM_SFTP_PRODUCTION_USERNAME }}" >> $GITHUB_ENV
-            echo "PASS=${{ secrets.CRM_SFTP_PRODUCTION_PASSWORD }}" >> $GITHUB_ENV
-            echo "LOCAL_DIR=${{ env.LOCAL_FILES_DIR }}" >> $GITHUB_ENV
-            echo "REMOTE_DIR=${{ env.PROD_REMOTE_FILES_DIR }}" >> $GITHUB_ENV
-          fi
+    # name: Export CSV
+    # runs-on: ubuntu-latest
+    # steps:
+    #   - name: Set output based on input
+    #     id: set_output
+    #     run: |
+    #       if [ "${{ inputs.environment }}" == "next" ]; then
+    #         echo "HOST=${{ vars.CRM_SFTP_TESTING_HOST }}" >> $GITHUB_ENV
+    #         echo "USER=${{ secrets.CRM_SFTP_TESTING_USERNAME }}" >> $GITHUB_ENV
+    #         echo "PASS=${{ secrets.CRM_SFTP_TESTING_PASSWORD }}" >> $GITHUB_ENV
+    #         echo "LOCAL_DIR=${{ env.LOCAL_FILES_DIR }}" >> $GITHUB_ENV
+    #         echo "REMOTE_DIR=${{ env.NEXT_REMOTE_FILES_DIR }}" >> $GITHUB_ENV
+    #       else
+    #         echo "HOST=${{ vars.CRM_SFTP_PRODUCTION_HOST }}" >> $GITHUB_ENV
+    #         echo "USER=${{ secrets.CRM_SFTP_PRODUCTION_USERNAME }}" >> $GITHUB_ENV
+    #         echo "PASS=${{ secrets.CRM_SFTP_PRODUCTION_PASSWORD }}" >> $GITHUB_ENV
+    #         echo "LOCAL_DIR=${{ env.LOCAL_FILES_DIR }}" >> $GITHUB_ENV
+    #         echo "REMOTE_DIR=${{ env.PROD_REMOTE_FILES_DIR }}" >> $GITHUB_ENV
+    #       fi
 
-      # - name: Print value of A
-      #   run: echo "A is set to $A"
-      # - name: Download CSV files
-      #   run: |
-      #     mkdir -p $LOCAL_FILES_DIR
-      #     curl -o "$LOCAL_FILES_DIR/product-$(date +'%Y-%m-%d_%H-%M-%S').csv" $NEXT_ADSS_PRODUCT_URL
-      - name: Upload CSV files to SFTP
-        # uses: wangyucode/sftp-upload-action@v2.0.2
-        # with:
-        #   host: ${{ vars.CRM_SFTP_TESTING_HOST }}
-        #   username: ${{ secrets.CRM_SFTP_TESTING_USERNAME }}
-        #   password: ${{ secrets.CRM_SFTP_TESTING_PASSWORD }}
-        #   localDir: '${{ env.LOCAL_FILES_DIR }}/'
-        #   remoteDir: '${{ env.NEXT_REMOTE_FILES_DIR }}'
-        run: |
-          echo "SFTP Host: $HOST"
-          echo "SFTP User: $USER"
-          echo "SFTP Pass: $PASS"
-          echo "Local dir: $LOCAL_DIR"
-          echo "Remote dir: $REMOTE_DIR"
+    #   # - name: Print value of A
+    #   #   run: echo "A is set to $A"
+    #   # - name: Download CSV files
+    #   #   run: |
+    #   #     mkdir -p $LOCAL_FILES_DIR
+    #   #     curl -o "$LOCAL_FILES_DIR/product-$(date +'%Y-%m-%d_%H-%M-%S').csv" $NEXT_ADSS_PRODUCT_URL
+    #   - name: Upload CSV files to SFTP
+    #     # uses: wangyucode/sftp-upload-action@v2.0.2
+    #     # with:
+    #     #   host: ${{ vars.CRM_SFTP_TESTING_HOST }}
+    #     #   username: ${{ secrets.CRM_SFTP_TESTING_USERNAME }}
+    #     #   password: ${{ secrets.CRM_SFTP_TESTING_PASSWORD }}
+    #     #   localDir: '${{ env.LOCAL_FILES_DIR }}/'
+    #     #   remoteDir: '${{ env.NEXT_REMOTE_FILES_DIR }}'
+    #     run: |
+    #       echo "SFTP Host: $HOST"
+    #       echo "SFTP User: $USER"
+    #       echo "SFTP Pass: $PASS"
+    #       echo "Local dir: $LOCAL_DIR"
+    #       echo "Remote dir: $REMOTE_DIR"
 
 
 
