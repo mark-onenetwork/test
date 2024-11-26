@@ -2,24 +2,24 @@ name: Manual CSV Export
 run-name: Manual CSV Export
 on:
   workflow_dispatch:
-  inputs:
-    environment:
-      description: 'Select an environment'
-      required: true
-      default: 'next'
-      options:
-        - next
-        - production
-    brand:
-      description: 'Select a brand'
-      required: true
-      default: 'next'
-      options:
-        - adss
-        - mp
-        - sealink
-        - cccsyd
-        - jackson
+    inputs:
+      environment:
+        description: 'Select an environment'
+        required: true
+        default: 'next'
+        options:
+          - next
+          - production
+      brand:
+        description: 'Select a brand'
+        required: true
+        default: 'next'
+        options:
+          - adss
+          - mp
+          - sealink
+          - cccsyd
+          - jackson
 
 jobs:
   build:
