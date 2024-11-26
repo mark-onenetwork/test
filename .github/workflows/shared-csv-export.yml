@@ -83,10 +83,8 @@ jobs:
 
       - name: Download CSV files
         run: |
-          echo "$URL"
-          env
           mkdir -p $LOCAL_FILES_DIR
-          curl -o "$LOCAL_FILES_DIR/product-$(date +'%Y-%m-%d_%H-%M-%S').csv $URL"
+          curl -o "$LOCAL_FILES_DIR/product-$(date +'%Y-%m-%d_%H-%M-%S').csv" $URL
       - name: Upload CSV files to next SFTP
         if: inputs.environment == 'next'
         # uses: wangyucode/sftp-upload-action@v2.0.2
