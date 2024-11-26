@@ -5,6 +5,7 @@ on:
     inputs:
       environment:
         description: 'Select an environment'
+        type: choice
         required: true
         default: 'next'
         options:
@@ -12,8 +13,9 @@ on:
           - production
       brand:
         description: 'Select a brand'
+        type: choice
         required: true
-        default: 'next'
+        default: 'cccsyd'
         options:
           - adss
           - mp
