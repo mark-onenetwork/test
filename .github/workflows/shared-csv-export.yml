@@ -30,17 +30,6 @@ env:
   PROD_JACKSON_PRODUCT_URL: https://www.thejackson.com.au/ecom/api/v1/studio_catalog/products
 
 jobs:
-  test:
-    name: Dump inputs
-    runs-on: ubuntu-latest
-    steps:
-      - name: Dump inputs
-        env:
-          GITHUB_CONTEXT: ${{ toJson(inputs) }}
-        run: |
-          echo "${{ inputs.environment }}"
-          echo "${{ inputs.brand }}"
-
   export:
     name: Export CSV
     runs-on: ubuntu-latest
