@@ -41,6 +41,7 @@ jobs:
           echo "${{ inputs.environment }}"
           echo "${{ inputs.brand }}"
 
+  export:
     name: Export CSV
     runs-on: ubuntu-latest
     steps:
