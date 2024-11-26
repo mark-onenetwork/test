@@ -37,8 +37,9 @@ jobs:
       - name: Dump inputs
         env:
           GITHUB_CONTEXT: ${{ toJson(inputs) }}
-        run: echo "${{ inputs.environment }}"
-        run: echo "${{ inputs.brand }}"
+        run: |
+          echo "${{ inputs.environment }}"
+          echo "${{ inputs.brand }}"
 
     # name: Export CSV
     # runs-on: ubuntu-latest
