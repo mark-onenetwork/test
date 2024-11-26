@@ -48,10 +48,6 @@ jobs:
       - name: Set output based on input
         run: |
           if [ "${{ inputs.environment }}" == "next" ]; then
-            # echo "HOST=${{ vars.CRM_SFTP_TESTING_HOST }}" >> $GITHUB_ENV
-            # echo "USER=${{ secrets.CRM_SFTP_TESTING_USERNAME }}" >> $GITHUB_ENV
-            # echo "PASS=${{ secrets.CRM_SFTP_TESTING_PASSWORD }}" >> $GITHUB_ENV
-            # echo "REMOTE_DIR=${{ env.NEXT_REMOTE_FILES_DIR }}" >> $GITHUB_ENV
             if [ "${{ inputs.brand }}" == "adss" ]; then
               echo "URL=${{ env.NEXT_ADSS_PRODUCT_URL }}" >> $GITHUB_ENV
             elif [ "${{ inputs.brand }}" == "mp" ]; then
@@ -64,10 +60,6 @@ jobs:
               echo "URL=${{ env.NEXT_JACKSON_PRODUCT_URL }}" >> $GITHUB_ENV
             fi
           else
-            # echo "HOST=${{ vars.CRM_SFTP_PRODUCTION_HOST }}" >> $GITHUB_ENV
-            # echo "USER=${{ secrets.CRM_SFTP_PRODUCTION_USERNAME }}" >> $GITHUB_ENV
-            # echo "PASS=${{ secrets.CRM_SFTP_PRODUCTION_PASSWORD }}" >> $GITHUB_ENV
-            # echo "REMOTE_DIR=${{ env.PROD_REMOTE_FILES_DIR }}" >> $GITHUB_ENV
             if [ "${{ inputs.brand }}" == "adss" ]; then
               echo "URL=${{ env.PROD_ADSS_PRODUCT_URL }}" >> $GITHUB_ENV
             elif [ "${{ inputs.brand }}" == "mp" ]; then

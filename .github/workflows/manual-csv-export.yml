@@ -24,16 +24,6 @@ on:
           - jackson
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Print selected options
-        run: |
-          echo "Selected environment: ${{ github.event.inputs.environment }}"
-          echo "User message: ${{ github.event.inputs.brand }}"
   export:
     name: Export CSV
     uses: ./.github/workflows/shared-csv-export.yml
