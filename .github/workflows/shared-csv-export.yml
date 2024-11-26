@@ -1,0 +1,87 @@
+name: Reusable workflow for CSV export
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      brand:
+        required: true
+        type: string
+        
+env:
+  LOCAL_FILES_DIR: /tmp/csv-files
+
+  NEXT_REMOTE_FILES_DIR: /Import/mcp_catalog_testing
+  NEXT_ADSS_PRODUCT_URL: https://adss-next.travellink.com.au/ecom/api/v1/studio_catalog/products
+  NEXT_MP_PRODUCT_URL: https://mp-next.travellink.com.au/ecom/api/v1/studio_catalog/products
+  NEXT_SEALINK_PRODUCT_URL: https://sealink-next.travellink.com.au/ecom/api/v1/studio_catalog/products
+  NEXT_SEALINK_CATEGORY_URL: https://sealink-next.travellink.com.au/ecom/api/v1/studio_catalog/categories
+  NEXT_CCCSYD_PRODUCT_URL: https://cccsydney-cms-next.travellink.com.au/ecom/api/v1/studio_catalog/products
+  NEXT_JACKSON_PRODUCT_URL: https://thejackson-next.travellink.com.au/ecom/api/v1/studio_catalog/products
+
+  PROD_REMOTE_FILES_DIR: /Import/mcp_catalog
+  PROD_ADSS_PRODUCT_URL: https://www.adelaidesightseeing.com.au/ecom/api/v1/studio_catalog/products
+  PROD_MP_PRODUCT_URL: https://www.murrayprincess.com.au/ecom/api/v1/studio_catalog/products
+  PROD_SEALINK_PRODUCT_URL: https://www.sealink.com.au/ecom/api/v1/studio_catalog/products
+  PROD_SEALINK_CATEGORY_URL: https://www.sealink.com.au/ecom/api/v1/studio_catalog/categories
+  PROD_CCCSYD_PRODUCT_URL: https://www.captaincook.com.au/ecom/api/v1/studio_catalog/products
+  PROD_JACKSON_PRODUCT_URL: https://www.thejackson.com.au/ecom/api/v1/studio_catalog/products
+
+jobs:
+  test:
+    name: Dump inputs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump inputs
+        env:
+          GITHUB_CONTEXT: ${{ toJson(inputs) }}
+        run: echo "${{ inputs.environment }}"
+        run: echo "${{ inputs.brand }}"
+
+    name: Export CSV
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set output based on input
+        id: set_output
+        run: |
+          if [ "${{ inputs.environment }}" == "next" ]; then
+            echo "HOST=${{ vars.CRM_SFTP_TESTING_HOST }}" >> $GITHUB_ENV
+            echo "USER=${{ secrets.CRM_SFTP_TESTING_USERNAME }}" >> $GITHUB_ENV
+            echo "PASS=${{ secrets.CRM_SFTP_TESTING_PASSWORD }}" >> $GITHUB_ENV
+            echo "LOCAL_DIR=${{ env.LOCAL_FILES_DIR }}" >> $GITHUB_ENV
+            echo "REMOTE_DIR=${{ env.NEXT_REMOTE_FILES_DIR }}" >> $GITHUB_ENV
+          else
+            echo "HOST=${{ vars.CRM_SFTP_PRODUCTION_HOST }}" >> $GITHUB_ENV
+            echo "USER=${{ secrets.CRM_SFTP_PRODUCTION_USERNAME }}" >> $GITHUB_ENV
+            echo "PASS=${{ secrets.CRM_SFTP_PRODUCTION_PASSWORD }}" >> $GITHUB_ENV
+            echo "LOCAL_DIR=${{ env.LOCAL_FILES_DIR }}" >> $GITHUB_ENV
+            echo "REMOTE_DIR=${{ env.PROD_REMOTE_FILES_DIR }}" >> $GITHUB_ENV
+          fi
+
+      # - name: Print value of A
+      #   run: echo "A is set to $A"
+      # - name: Download CSV files
+      #   run: |
+      #     mkdir -p $LOCAL_FILES_DIR
+      #     curl -o "$LOCAL_FILES_DIR/product-$(date +'%Y-%m-%d_%H-%M-%S').csv" $NEXT_ADSS_PRODUCT_URL
+      - name: Upload CSV files to SFTP
+        # uses: wangyucode/sftp-upload-action@v2.0.2
+        # with:
+        #   host: ${{ vars.CRM_SFTP_TESTING_HOST }}
+        #   username: ${{ secrets.CRM_SFTP_TESTING_USERNAME }}
+        #   password: ${{ secrets.CRM_SFTP_TESTING_PASSWORD }}
+        #   localDir: '${{ env.LOCAL_FILES_DIR }}/'
+        #   remoteDir: '${{ env.NEXT_REMOTE_FILES_DIR }}'
+        run: |
+          echo "SFTP Host: $HOST"
+          echo "SFTP User: $USER"
+          echo "SFTP Pass: $PASS"
+          echo "Local dir: $LOCAL_DIR"
+          echo "Remote dir: $REMOTE_DIR"
+
+
+
+
+
