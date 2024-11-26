@@ -101,7 +101,7 @@ jobs:
           echo "Local dir: ${{ env.LOCAL_FILES_DIR  }}/"
           echo "Remote dir: ${{ env.NEXT_REMOTE_FILES_DIR }}"
       - name: Upload CSV files to production SFTP
-        if: inputs.environment == 'next'
+        if: inputs.environment == 'production'
         # uses: wangyucode/sftp-upload-action@v2.0.2
         # with:
         #   host: ${{ vars.CRM_SFTP_TESTING_HOST }}
