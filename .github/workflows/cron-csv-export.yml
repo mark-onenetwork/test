@@ -5,8 +5,8 @@ on:
     - cron: '0 9 * * 3'
     - cron: '2 9 * * 3'
     - cron: '4 9 * * 3'
-    - cron: '6 9 * * 3'
-    - cron: '8 9 * * 3'
+    # - cron: '6 9 * * 3'
+    # - cron: '8 9 * * 3'
 
 jobs:
   next-adss:
@@ -39,22 +39,22 @@ jobs:
       brand: sealink
     secrets: inherit
 
-  next-cccsyd:
-    name: CSV files for CCCSYD next
-    if: github.event.schedule == '6 9 * * 3'
-    runs-on: ubuntu-latest
-    uses: ./.github/workflows/shared-csv-export.yml
-    with:
-      environment: next
-      brand: cccsyd
-    secrets: inherit
+  # next-cccsyd:
+  #   name: CSV files for CCCSYD next
+  #   if: github.event.schedule == '6 9 * * 3'
+  #   runs-on: ubuntu-latest
+  #   uses: ./.github/workflows/shared-csv-export.yml
+  #   with:
+  #     environment: next
+  #     brand: cccsyd
+  #   secrets: inherit
 
-  next-jackson:
-    name: CSV files for The Jackson next
-    if: github.event.schedule == '8 9 * * 3'
-    runs-on: ubuntu-latest
-    uses: ./.github/workflows/shared-csv-export.yml
-    with:
-      environment: next
-      brand: jackson
-    secrets: inherit
+  # next-jackson:
+  #   name: CSV files for The Jackson next
+  #   if: github.event.schedule == '8 9 * * 3'
+  #   runs-on: ubuntu-latest
+  #   uses: ./.github/workflows/shared-csv-export.yml
+  #   with:
+  #     environment: next
+  #     brand: jackson
+  #   secrets: inherit
