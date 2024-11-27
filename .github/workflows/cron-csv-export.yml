@@ -13,32 +13,32 @@ jobs:
   next-adss:
     name: CSV files for ADSS next
     # if: github.event.schedule == '0 9 * * 3'
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
     uses: ./.github/workflows/shared-csv-export.yml
     with:
       environment: next
       brand: adss
     secrets: inherit
 
-  next-mp:
-    name: CSV files for MP next
-    if: github.event.schedule == '2 9 * * 3'
-    runs-on: ubuntu-latest
-    uses: ./.github/workflows/shared-csv-export.yml
-    with:
-      environment: next
-      brand: mp
-    secrets: inherit
+  # next-mp:
+  #   name: CSV files for MP next
+  #   if: github.event.schedule == '2 9 * * 3'
+  #   runs-on: ubuntu-latest
+  #   uses: ./.github/workflows/shared-csv-export.yml
+  #   with:
+  #     environment: next
+  #     brand: mp
+  #   secrets: inherit
 
-  next-sealink:
-    name: CSV files for Sealink next
-    if: github.event.schedule == '4 9 * * 3'
-    runs-on: ubuntu-latest
-    uses: ./.github/workflows/shared-csv-export.yml
-    with:
-      environment: next
-      brand: sealink
-    secrets: inherit
+  # next-sealink:
+  #   name: CSV files for Sealink next
+  #   if: github.event.schedule == '4 9 * * 3'
+  #   runs-on: ubuntu-latest
+  #   uses: ./.github/workflows/shared-csv-export.yml
+  #   with:
+  #     environment: next
+  #     brand: sealink
+  #   secrets: inherit
 
   # next-cccsyd:
   #   name: CSV files for CCCSYD next
