@@ -1,17 +1,18 @@
 name: CRM Cron Jobs
 run-name: CRM Cron Jobs
 on:
-  schedule:
-    - cron: '0 9 * * 3'
-    - cron: '2 9 * * 3'
-    - cron: '4 9 * * 3'
+  push:
+  # schedule:
+  #   - cron: '0 9 * * 3'
+  #   - cron: '2 9 * * 3'
+  #   - cron: '4 9 * * 3'
     # - cron: '6 9 * * 3'
     # - cron: '8 9 * * 3'
 
 jobs:
   next-adss:
     name: CSV files for ADSS next
-    if: github.event.schedule == '0 9 * * 3'
+    # if: github.event.schedule == '0 9 * * 3'
     runs-on: ubuntu-latest
     uses: ./.github/workflows/shared-csv-export.yml
     with:
