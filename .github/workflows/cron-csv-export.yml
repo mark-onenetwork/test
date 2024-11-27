@@ -2,11 +2,11 @@ name: CRM Cron Jobs
 run-name: CRM Cron Jobs
 on:
   schedule:
-    - cron: '0 2 * * 3'
-    - cron: '20 2 * * 3'
-    - cron: '40 2 * * 3'
-    - cron: '0 3 * * 3'
-    - cron: '20 3 * * 3'
+    - cron: '0 9 * * 3'
+    - cron: '2 9 * * 3'
+    - cron: '4 9 * * 3'
+    - cron: '6 9 * * 3'
+    - cron: '8 9 * * 3'
 
 jobs:
   next-adss:
