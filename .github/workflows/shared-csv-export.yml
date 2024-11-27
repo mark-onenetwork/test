@@ -9,7 +9,7 @@ on:
       brand:
         required: true
         type: string
-        
+
 env:
   LOCAL_FILES_DIR: /tmp/csv-files
 
@@ -30,11 +30,11 @@ env:
   PROD_JACKSON_PRODUCT_URL: https://www.thejackson.com.au/ecom/api/v1/studio_catalog/products
 
 jobs:
-  export:
+  export-csv:
     name: Export CSV
     runs-on: ubuntu-latest
     steps:
-      - name: Set output based on input
+      - name: Set the URL for the BU
         run: |
           if [ "${{ inputs.environment }}" == "next" ]; then
             if [ "${{ inputs.brand }}" == "adss" ]; then
@@ -66,38 +66,23 @@ jobs:
         run: |
           mkdir -p $LOCAL_FILES_DIR
           curl -o "$LOCAL_FILES_DIR/product-$(date +'%Y-%m-%d_%H-%M-%S').csv" $URL
+
       - name: Upload CSV files to next SFTP
         if: inputs.environment == 'next'
-        # uses: wangyucode/sftp-upload-action@v2.0.2
-        # with:
-        #   host: ${{ vars.CRM_SFTP_TESTING_HOST }}
-        #   username: ${{ secrets.CRM_SFTP_TESTING_USERNAME }}
-        #   password: ${{ secrets.CRM_SFTP_TESTING_PASSWORD }}
-        #   localDir: '${{ env.LOCAL_FILES_DIR }}/'
-        #   remoteDir: '${{ env.NEXT_REMOTE_FILES_DIR }}'
-        run: |
-          echo "SFTP Host: ${{ vars.CRM_SFTP_TESTING_HOST }}"
-          echo "SFTP User: ${{ secrets.CRM_SFTP_TESTING_USERNAME }}"
-          echo "SFTP Pass: ${{ secrets.CRM_SFTP_TESTING_PASSWORD }}"
-          echo "Local dir: ${{ env.LOCAL_FILES_DIR  }}/"
-          echo "Remote dir: ${{ env.NEXT_REMOTE_FILES_DIR }}"
+        uses: wangyucode/sftp-upload-action@v2.0.2
+        with:
+          host: ${{ vars.CRM_SFTP_TESTING_HOST }}
+          username: ${{ secrets.CRM_SFTP_TESTING_USERNAME }}
+          password: ${{ secrets.CRM_SFTP_TESTING_PASSWORD }}
+          localDir: '${{ env.LOCAL_FILES_DIR }}/'
+          remoteDir: '${{ env.NEXT_REMOTE_FILES_DIR }}'
+
       - name: Upload CSV files to production SFTP
         if: inputs.environment == 'production'
-        # uses: wangyucode/sftp-upload-action@v2.0.2
-        # with:
-        #   host: ${{ vars.CRM_SFTP_TESTING_HOST }}
-        #   username: ${{ secrets.CRM_SFTP_TESTING_USERNAME }}
-        #   password: ${{ secrets.CRM_SFTP_TESTING_PASSWORD }}
-        #   localDir: '${{ env.LOCAL_FILES_DIR }}/'
-        #   remoteDir: '${{ env.NEXT_REMOTE_FILES_DIR }}'
-        run: |
-          echo "SFTP Host: ${{ vars.CRM_SFTP_TESTING_HOST }}"
-          echo "SFTP User: ${{ secrets.CRM_SFTP_TESTING_USERNAME }}"
-          echo "SFTP Pass: ${{ secrets.CRM_SFTP_TESTING_PASSWORD }}"
-          echo "Local dir: ${{ env.LOCAL_FILES_DIR  }}/"
-          echo "Remote dir: ${{ env.NEXT_REMOTE_FILES_DIR }}"
-
-
-
-
-
+        uses: wangyucode/sftp-upload-action@v2.0.2
+        with:
+          host: ${{ vars.CRM_SFTP_PRODUCTION_HOST }}
+          username: ${{ secrets.CRM_SFTP_PRODUCTION_USERNAME }}
+          password: ${{ secrets.CRM_SFTP_PRODUCTION_PASSWORD }}
+          localDir: '${{ env.LOCAL_FILES_DIR }}/'
+          remoteDir: '${{ env.PROD_REMOTE_FILES_DIR }}'

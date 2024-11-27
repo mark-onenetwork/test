@@ -24,10 +24,11 @@ on:
           - jackson
 
 jobs:
-  export:
+  export-csv:
     name: Export CSV
     uses: ./.github/workflows/shared-csv-export.yml
     with:
       environment: ${{ inputs.environment }}
       brand: ${{ inputs.brand }}
     secrets: inherit
+
