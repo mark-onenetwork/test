@@ -1,10 +1,11 @@
 name: CRM Cron Jobs
 run-name: CRM Cron Jobs
 on:
-  schedule:
+  push:
+  # schedule:
     # - cron: '0 9 * * 3'
-    - cron: '40 9 * * 3'
-    - cron: '41 9 * * 3'
+    # - cron: '40 9 * * 3'
+    # - cron: '41 9 * * 3'
     # - cron: '6 9 * * 3'
     # - cron: '8 9 * * 3'
 
